@@ -14,28 +14,83 @@ const brain = {
 
     hello:"Hello 👋 I Am MyGPT",
 
-    hi:"Hi User 👋",
+    hi:"Hi User 👋 Welcome Back",
 
-    who:"I Am Your AI Assistant",
+    who:"I Am Your Personal AI Assistant",
 
-    ai:"Artificial Intelligence Is Powerful",
+    ai:"Artificial Intelligence Learns Patterns",
 
-    coding:"Coding Builds Amazing Things",
+    coding:"Coding Can Build AI Websites And Games",
 
     html:"HTML Creates Website Structure",
 
-    css:"CSS Makes Websites Beautiful",
+    css:"CSS Makes Website Beautiful",
 
-    javascript:"JavaScript Adds Interaction",
+    javascript:"JavaScript Adds Interactions",
 
-    movie:"Movies Are Amazing",
+    movie:"Movies Are Amazing 🎬",
 
     image:"I Can Generate Pixel Images",
 
-    help:"I Can Chat With You"
+    help:"I Can Help You With Coding",
+
+    youtube:"YouTube Is A Video Platform",
+
+    github:"GitHub Stores Coding Projects",
+
+    google:"Google Is A Search Engine",
+
+    chatgpt:"ChatGPT Is A Powerful AI",
+
+    future:"Future AI Will Become Smarter",
+
+    robot:"Robots Use Artificial Intelligence",
+
+    game:"Games Are Made Using Programming",
+
+    python:"Python Is Popular For AI",
+
+    node:"Node.js Runs Backend Servers",
+
+    server:"Servers Store And Process Data",
+
+    database:"Databases Store Information",
+
+    internet:"Internet Connects The World",
+
+    mobile:"Mobile Apps Use APIs",
+
+    app:"Apps Help Users",
+
+    design:"Good Design Makes UI Beautiful",
+
+    hacker:"Hackers Understand Computer Systems",
+
+    security:"Security Protects Data",
+
+    science:"Science Changes The World",
+
+    technology:"Technology Evolves Fast",
+
+    computer:"Computers Process Billions Of Calculations",
+
+    love:"Love Is Powerful ❤️",
+
+    song:"Songs Carry Emotions",
+
+    music:"Music Connects People",
+
+    website:"Websites Use HTML CSS And JavaScript",
+
+    dark:"Dark Mode Looks Cool",
+
+    pixel:"Pixel Art Uses Small Colored Squares",
+
+    generate:"I Can Generate Creative Pixel Patterns",
+
+    mygpt:"I Am Your Own AI Project"
 
 };
-
 /* ADD MESSAGE */
 
 function addMessage(text,type){
