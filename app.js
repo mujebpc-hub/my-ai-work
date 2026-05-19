@@ -13,6 +13,9 @@ document.getElementById("ratioSelect");
 const placeholder =
 document.getElementById("placeholder");
 
+const downloadBtn =
+document.getElementById("downloadBtn");
+
 /* YOUR TOKEN */
 
 const API_TOKEN =
