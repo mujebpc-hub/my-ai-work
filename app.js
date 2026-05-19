@@ -10,10 +10,13 @@ document.getElementById("userInput");
 const ratioSelect =
 document.getElementById("ratioSelect");
 
+const placeholder =
+document.getElementById("placeholder");
+
 /* YOUR HUGGING FACE TOKEN */
 
 const API_TOKEN =
-"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";
+"APNA_NEW_TOKEN_YAHA_PASTE_KARO";
 
 /* GENERATE IMAGE */
 
@@ -31,6 +34,17 @@ generateBtn.addEventListener("click", async()=>{
 
     generateBtn.innerText =
     "Generating...";
+
+    generateBtn.disabled = true;
+
+    resultImage.style.display =
+    "none";
+
+    placeholder.style.display =
+    "flex";
+
+    placeholder.innerHTML =
+    "<h2>Generating AI Image...</h2>";
 
     let width = 512;
     let height = 512;
@@ -79,29 +93,56 @@ generateBtn.addEventListener("click", async()=>{
 
         });
 
+        if(!response.ok){
+
+            throw new Error("Failed");
+
+        }
+
         const blob =
         await response.blob();
 
         const imageUrl =
         URL.createObjectURL(blob);
 
+        resultImage.src =
+        imageUrl;
+
         resultImage.style.display =
         "block";
 
-        resultImage.src =
-        imageUrl;
+        placeholder.style.display =
+        "none";
 
     }
 
     catch(error){
 
-        alert("Image Generation Failed");
-
         console.log(error);
+
+        placeholder.style.display =
+        "flex";
+
+        placeholder.innerHTML =
+        "<h2>Image Generation Failed</h2>";
 
     }
 
     generateBtn.innerText =
-    "Generate Image";
+    "Generate";
+
+    generateBtn.disabled = false;
+
+});
+
+/* ENTER KEY */
+
+userInput.addEventListener("keypress",(e)=>{
+
+    if(e.key === "Enter"){
+
+        generateBtn.click();
+
+    }
 
 });
