@@ -1,49 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Image Generator</title>
 
-  <link rel="stylesheet" href="style.css">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>AI Image Generator</title>
+
+<link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
 
 <div class="container">
 
-    <h1>AI Image Generator</h1>
+<h1>AI Image Generator</h1>
 
-    <input
-      type="text"
-      id="userInput"
-      placeholder="Enter Prompt..."
-    >
+<input
+type="text"
+id="userInput"
+placeholder="Enter Prompt..."
+>
 
-    <select id="ratioSelect">
+<select id="ratioSelect">
 
-      <option value="square">
-        1:1 Square
-      </option>
+<option value="square">
+1:1 Square
+</option>
 
-      <option value="landscape">
-        16:9 Landscape
-      </option>
+<option value="landscape">
+16:9 Landscape
+</option>
 
-      <option value="portrait">
-        9:16 Portrait
-      </option>
+<option value="portrait">
+9:16 Portrait
+</option>
 
-    </select>
+</select>
 
-    <button id="generateBtn">
-      Generate Image
-    </button>
+<button id="generateBtn">
 
-    <div class="imageBox">
+Generate Image
 
-      <img id="resultImage" src="">
+</button>
 
-    </div>
+<div class="imageBox">
+
+<img id="resultImage" src="">
+
+</div>
 
 </div>
 
