@@ -11,25 +11,43 @@
 
 <div class="container">
 
-  <h1>AI Image Generator</h1>
+    <h1>AI Image Generator</h1>
 
-  <input
-    type="text"
-    id="prompt"
-    placeholder="Enter your prompt..."
-  >
+    <input
+      type="text"
+      id="userInput"
+      placeholder="Enter Prompt..."
+    >
 
-  <button id="generateBtn">
-    Generate Image
-  </button>
+    <select id="ratioSelect">
 
-  <div class="imageBox">
-    <img id="resultImage" src="">
-  </div>
+      <option value="square">
+        1:1 Square
+      </option>
+
+      <option value="landscape">
+        16:9 Landscape
+      </option>
+
+      <option value="portrait">
+        9:16 Portrait
+      </option>
+
+    </select>
+
+    <button id="generateBtn">
+      Generate Image
+    </button>
+
+    <div class="imageBox">
+
+      <img id="resultImage" src="">
+
+    </div>
 
 </div>
 
-<script src="script.js"></script>
+<script src="app.js"></script>
 
 </body>
 </html>
