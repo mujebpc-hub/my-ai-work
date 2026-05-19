@@ -28,35 +28,42 @@ generateBtn.addEventListener("click", async()=>{
     const prompt =
     userInput.value;
 
-    /* AI PROMPT ENHANCER */
-
-let enhancedPrompt = `
-${prompt},
-ultra realistic,
-cinematic lighting,
-highly detailed,
-8k quality,
-masterpiece,
-dramatic atmosphere,
-professional AI art
-`;
-
     if(prompt === ""){
 
         alert("Enter Prompt");
+
         return;
     }
+
+    /* AI PROMPT ENHANCER */
+
+    let enhancedPrompt = `
+    ${prompt},
+    ultra realistic,
+    cinematic lighting,
+    highly detailed,
+    8k quality,
+    masterpiece,
+    dramatic atmosphere,
+    professional AI art
+    `;
 
     generateBtn.innerText =
     "Generating...";
 
-    placeholder.innerHTML =
-    "<h2>Generating Image...</h2>";
+    placeholder.style.display =
+    "flex";
 
-    downloadBtn.style.display =
-"none";
+    placeholder.innerHTML =
+    `
+    <h2>Generating Image...</h2>
+    <div class="loader"></div>
+    `;
 
     resultImage.style.display =
+    "none";
+
+    downloadBtn.style.display =
     "none";
 
     let width = 1024;
@@ -93,7 +100,6 @@ professional AI art
 
                 "Content-Type":
                 "application/json"
-
             },
 
             body:JSON.stringify({
@@ -108,7 +114,6 @@ professional AI art
                     guidance_scale:7.5,
 
                     num_inference_steps:30
-
                 },
 
                 options:{
@@ -118,8 +123,6 @@ professional AI art
             })
 
         });
-
-        /* ERROR CHECK */
 
         if(!response.ok){
 
@@ -136,17 +139,17 @@ professional AI art
         resultImage.src =
         imageUrl;
 
-        downloadBtn.href =
-imageUrl;
-
-downloadBtn.style.display =
-"block";
-
         resultImage.style.display =
         "block";
 
         placeholder.style.display =
         "none";
+
+        downloadBtn.href =
+        imageUrl;
+
+        downloadBtn.style.display =
+        "block";
 
     }
 
@@ -158,8 +161,10 @@ downloadBtn.style.display =
         "flex";
 
         placeholder.innerHTML =
-        "<h2>Image Generation Failed</h2>";
-
+        `
+        <h2>Image Generation Failed</h2>
+        <p>Try Another Prompt</p>
+        `;
     }
 
     generateBtn.innerText =
