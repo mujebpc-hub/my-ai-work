@@ -8,49 +8,118 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>AI Image Generator</title>
+<title>My AI Generator</title>
 
 <link rel="stylesheet" href="style.css">
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
 
 </head>
 
 <body>
 
-<div class="container">
+<!-- BACKGROUND -->
 
-<h1>AI Image Generator</h1>
+<div class="backgroundGlow"></div>
+
+<!-- MAIN APP -->
+
+<div class="app">
+
+<!-- TOP -->
+
+<div class="topBar">
+
+<div class="logoArea">
+
+<div class="logoCircle">
+AI
+</div>
+
+<div>
+
+<h1>
+My AI Generator
+</h1>
+
+<p>
+Create Cinematic AI Images
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- IMAGE AREA -->
+
+<div class="imageSection">
+
+<div class="imageBox">
+
+<img id="resultImage" src="">
+
+<div class="placeholder"
+id="placeholder">
+
+<h2>
+Generate Amazing AI Images
+</h2>
+
+<p>
+Anime • Cinematic • Realistic • Fantasy
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- PROMPT BAR -->
+
+<div class="bottomBar">
 
 <input
 type="text"
 id="userInput"
-placeholder="Enter Prompt..."
+placeholder="Describe your imagination..."
 >
+
+<div class="controls">
 
 <select id="ratioSelect">
 
 <option value="square">
-1:1 Square
+1:1
 </option>
 
 <option value="landscape">
-16:9 Landscape
+16:9
 </option>
 
 <option value="portrait">
-9:16 Portrait
+9:16
 </option>
 
 </select>
 
 <button id="generateBtn">
 
-Generate Image
+Generate
 
 </button>
 
-<div class="imageBox">
-
-<img id="resultImage" src="">
+</div>
 
 </div>
 
