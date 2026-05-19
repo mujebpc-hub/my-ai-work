@@ -120,6 +120,12 @@ generateBtn.addEventListener("click", async()=>{
         resultImage.src =
         imageUrl;
 
+        downloadBtn.href =
+imageUrl;
+
+downloadBtn.style.display =
+"block";
+
         resultImage.style.display =
         "block";
 
