@@ -28,6 +28,19 @@ generateBtn.addEventListener("click", async()=>{
     const prompt =
     userInput.value;
 
+    /* AI PROMPT ENHANCER */
+
+let enhancedPrompt = `
+${prompt},
+ultra realistic,
+cinematic lighting,
+highly detailed,
+8k quality,
+masterpiece,
+dramatic atmosphere,
+professional AI art
+`;
+
     if(prompt === ""){
 
         alert("Enter Prompt");
