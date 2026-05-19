@@ -1,114 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Image Generator</title>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>MyGPT</title>
-
-<link rel="stylesheet" href="style.css">
-
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div class="app">
+<div class="container">
 
-    <!-- SIDEBAR -->
+  <h1>AI Image Generator</h1>
 
-    <div class="sidebar">
+  <input
+    type="text"
+    id="prompt"
+    placeholder="Enter your prompt..."
+  >
 
-        <div class="logo">
+  <button id="generateBtn">
+    Generate Image
+  </button>
 
-            <h1>MyGPT</h1>
-
-        </div>
-
-        <button id="newChatBtn">
-
-            + New Chat
-
-        </button>
-
-        <div class="menu">
-
-            <div class="menuItem">
-                AI Chat
-            </div>
-
-            <div class="menuItem">
-                Image Generate
-            </div>
-
-            <div class="menuItem">
-                AI Memory
-            </div>
-
-            <div class="menuItem">
-                Future Upgrade
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- MAIN -->
-
-    <div class="main">
-
-        <!-- TOP -->
-
-        <div class="topBar">
-
-            <h2>MyGPT AI Assistant</h2>
-
-        </div>
-
-        <!-- CHAT -->
-
-        <div id="chatBox">
-
-            <div class="welcome">
-
-                <h1>Hello 👋</h1>
-
-                <p>I Am MyGPT AI</p>
-
-            </div>
-
-        </div>
-
-        <!-- INPUT -->
-
-        <div class="inputArea">
-
-            <input
-            type="text"
-            id="userInput"
-            placeholder="Message MyGPT..."
-            >
-
-            <button id="sendBtn">
-
-                Send
-
-            </button>
-
-            <button id="imageBtn">
-
-                Image
-
-            </button>
-
-        </div>
-
-    </div>
+  <div class="imageBox">
+    <img id="resultImage" src="">
+  </div>
 
 </div>
 
-<script src="app.js"></script>
+<script src="script.js"></script>
 
 </body>
 </html>
