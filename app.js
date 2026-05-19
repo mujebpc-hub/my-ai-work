@@ -40,6 +40,9 @@ generateBtn.addEventListener("click", async()=>{
     placeholder.innerHTML =
     "<h2>Generating Image...</h2>";
 
+    downloadBtn.style.display =
+"none";
+
     resultImage.style.display =
     "none";
 
