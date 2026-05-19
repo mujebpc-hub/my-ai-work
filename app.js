@@ -98,7 +98,7 @@ professional AI art
 
             body:JSON.stringify({
 
-                inputs:prompt,
+                inputs:enhancedPrompt,
 
                 parameters:{
 
