@@ -16,7 +16,7 @@ document.getElementById("placeholder");
 /* YOUR TOKEN */
 
 const API_TOKEN =
-"PASTE_YOUR_HUGGINGFACE_TOKEN_HERE";
+"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";
 
 /* GENERATE IMAGE */
 
