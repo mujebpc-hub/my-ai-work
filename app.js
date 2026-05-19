@@ -16,7 +16,7 @@ document.getElementById("placeholder");
 const downloadBtn =
 document.getElementById("downloadBtn");
 
-/* YOUR TOKEN */
+/* TOKEN */
 
 const API_TOKEN =
 "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";
@@ -26,12 +26,11 @@ const API_TOKEN =
 generateBtn.addEventListener("click", async()=>{
 
     const prompt =
-    userInput.value;
+    userInput.value.trim();
 
     if(prompt === ""){
 
         alert("Enter Prompt");
-
         return;
     }
 
@@ -42,21 +41,22 @@ generateBtn.addEventListener("click", async()=>{
     ultra realistic,
     cinematic lighting,
     highly detailed,
-    8k quality,
     masterpiece,
-    dramatic atmosphere,
-    professional AI art
+    8k,
+    professional photography
     `;
 
     generateBtn.innerText =
     "Generating...";
 
+    generateBtn.disabled = true;
+
     placeholder.style.display =
     "flex";
 
-    placeholder.innerHTML =
-    `
+    placeholder.innerHTML = `
     <h2>Generating Image...</h2>
+    <p>Please wait few seconds</p>
     <div class="loader"></div>
     `;
 
@@ -69,7 +69,7 @@ generateBtn.addEventListener("click", async()=>{
     let width = 1024;
     let height = 1024;
 
-    /* RATIO */
+    /* IMAGE RATIO */
 
     if(ratioSelect.value === "landscape"){
 
@@ -87,7 +87,7 @@ generateBtn.addEventListener("click", async()=>{
 
         const response = await fetch(
 
-        "https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-schnell",
+        "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0",
 
         {
 
@@ -100,34 +100,27 @@ generateBtn.addEventListener("click", async()=>{
 
                 "Content-Type":
                 "application/json"
+
             },
 
             body:JSON.stringify({
 
-                inputs:enhancedPrompt,
-
-                parameters:{
-
-                    width:width,
-                    height:height,
-
-                    guidance_scale:7.5,
-
-                    num_inference_steps:30
-                },
-
-                options:{
-                    wait_for_model:true
-                }
+                inputs: enhancedPrompt
 
             })
 
         });
 
+        /* CHECK ERROR */
+
         if(!response.ok){
 
-            throw new Error(
-            "API Error");
+            const errorText =
+            await response.text();
+
+            console.log(errorText);
+
+            throw new Error("API Failed");
         }
 
         const blob =
@@ -135,6 +128,8 @@ generateBtn.addEventListener("click", async()=>{
 
         const imageUrl =
         URL.createObjectURL(blob);
+
+        /* SHOW IMAGE */
 
         resultImage.src =
         imageUrl;
@@ -144,6 +139,8 @@ generateBtn.addEventListener("click", async()=>{
 
         placeholder.style.display =
         "none";
+
+        /* DOWNLOAD BUTTON */
 
         downloadBtn.href =
         imageUrl;
@@ -160,15 +157,16 @@ generateBtn.addEventListener("click", async()=>{
         placeholder.style.display =
         "flex";
 
-        placeholder.innerHTML =
-        `
+        placeholder.innerHTML = `
         <h2>Image Generation Failed</h2>
-        <p>Try Another Prompt</p>
+        <p>Model busy or token issue</p>
         `;
     }
 
     generateBtn.innerText =
     "Generate";
+
+    generateBtn.disabled = false;
 
 });
 
