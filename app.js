@@ -13,10 +13,10 @@ document.getElementById("ratioSelect");
 const placeholder =
 document.getElementById("placeholder");
 
-/* YOUR HUGGING FACE TOKEN */
+/* YOUR TOKEN */
 
 const API_TOKEN =
-"APNA_NEW_TOKEN_YAHA_PASTE_KARO";
+"PASTE_YOUR_HUGGINGFACE_TOKEN_HERE";
 
 /* GENERATE IMAGE */
 
@@ -28,44 +28,40 @@ generateBtn.addEventListener("click", async()=>{
     if(prompt === ""){
 
         alert("Enter Prompt");
-
         return;
     }
 
     generateBtn.innerText =
     "Generating...";
 
-    generateBtn.disabled = true;
+    placeholder.innerHTML =
+    "<h2>Generating Image...</h2>";
 
     resultImage.style.display =
     "none";
 
-    placeholder.style.display =
-    "flex";
+    let width = 1024;
+    let height = 1024;
 
-    placeholder.innerHTML =
-    "<h2>Generating AI Image...</h2>";
-
-    let width = 512;
-    let height = 512;
+    /* RATIO */
 
     if(ratioSelect.value === "landscape"){
 
-        width = 768;
-        height = 432;
+        width = 1280;
+        height = 720;
     }
 
     if(ratioSelect.value === "portrait"){
 
-        width = 432;
-        height = 768;
+        width = 720;
+        height = 1280;
     }
 
     try{
 
         const response = await fetch(
 
-        "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0",
+        "https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-dev",
 
         {
 
@@ -85,6 +81,17 @@ generateBtn.addEventListener("click", async()=>{
 
                 inputs:prompt,
 
+                parameters:{
+
+                    width:width,
+                    height:height,
+
+                    guidance_scale:7.5,
+
+                    num_inference_steps:30
+
+                },
+
                 options:{
                     wait_for_model:true
                 }
@@ -93,10 +100,12 @@ generateBtn.addEventListener("click", async()=>{
 
         });
 
+        /* ERROR CHECK */
+
         if(!response.ok){
 
-            throw new Error("Failed");
-
+            throw new Error(
+            "API Error");
         }
 
         const blob =
@@ -131,8 +140,6 @@ generateBtn.addEventListener("click", async()=>{
     generateBtn.innerText =
     "Generate";
 
-    generateBtn.disabled = false;
-
 });
 
 /* ENTER KEY */
@@ -142,7 +149,6 @@ userInput.addEventListener("keypress",(e)=>{
     if(e.key === "Enter"){
 
         generateBtn.click();
-
     }
 
 });
