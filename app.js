@@ -10,36 +10,98 @@ document.getElementById("userInput");
 const ratioSelect =
 document.getElementById("ratioSelect");
 
-generateBtn.addEventListener("click",()=>{
+/* YOUR HUGGING FACE TOKEN */
 
-const prompt =
-userInput.value;
+const API_TOKEN =
+"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";
 
-if(prompt === ""){
+/* GENERATE IMAGE */
 
-alert("Enter Prompt");
+generateBtn.addEventListener("click", async()=>{
 
-return;
-}
+    const prompt =
+    userInput.value;
 
-let width = 512;
-let height = 512;
+    if(prompt === ""){
 
-if(ratioSelect.value === "landscape"){
+        alert("Enter Prompt");
 
-width = 768;
-height = 432;
-}
+        return;
+    }
 
-if(ratioSelect.value === "portrait"){
+    generateBtn.innerText =
+    "Generating...";
 
-width = 432;
-height = 768;
-}
+    let width = 512;
+    let height = 512;
 
-resultImage.style.display = "block";
+    if(ratioSelect.value === "landscape"){
 
-resultImage.src =
-`https://picsum.photos/${width}/${height}?random=${Math.random()}`;
+        width = 768;
+        height = 432;
+    }
+
+    if(ratioSelect.value === "portrait"){
+
+        width = 432;
+        height = 768;
+    }
+
+    try{
+
+        const response = await fetch(
+
+        "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0",
+
+        {
+
+            method:"POST",
+
+            headers:{
+
+                "Authorization":
+                `Bearer ${API_TOKEN}`,
+
+                "Content-Type":
+                "application/json"
+
+            },
+
+            body:JSON.stringify({
+
+                inputs:prompt,
+
+                options:{
+                    wait_for_model:true
+                }
+
+            })
+
+        });
+
+        const blob =
+        await response.blob();
+
+        const imageUrl =
+        URL.createObjectURL(blob);
+
+        resultImage.style.display =
+        "block";
+
+        resultImage.src =
+        imageUrl;
+
+    }
+
+    catch(error){
+
+        alert("Image Generation Failed");
+
+        console.log(error);
+
+    }
+
+    generateBtn.innerText =
+    "Generate Image";
 
 });
