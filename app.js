@@ -16,17 +16,19 @@ document.getElementById("placeholder");
 const downloadBtn =
 document.getElementById("downloadBtn");
 
-/* TOKEN */
+/* API TOKEN */
 
 const API_TOKEN =
-"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";
+"YOUR_HUGGINGFACE_TOKEN";
 
 /* GENERATE IMAGE */
 
-generateBtn.addEventListener("click", async()=>{
+generateBtn.addEventListener("click", async () => {
 
     const prompt =
     userInput.value.trim();
+
+    /* EMPTY PROMPT */
 
     if(prompt === ""){
 
@@ -34,7 +36,7 @@ generateBtn.addEventListener("click", async()=>{
         return;
     }
 
-    /* AI PROMPT ENHANCER */
+    /* PROMPT ENHANCER */
 
     let enhancedPrompt = `
     ${prompt},
@@ -46,17 +48,24 @@ generateBtn.addEventListener("click", async()=>{
     professional photography
     `;
 
+    /* BUTTON STATE */
+
     generateBtn.innerText =
     "Generating...";
 
-    generateBtn.disabled = true;
+    generateBtn.disabled =
+    true;
+
+    /* SHOW LOADER */
 
     placeholder.style.display =
     "flex";
 
     placeholder.innerHTML = `
     <h2>Generating Image...</h2>
+
     <p>Please wait few seconds</p>
+
     <div class="loader"></div>
     `;
 
@@ -66,10 +75,10 @@ generateBtn.addEventListener("click", async()=>{
     downloadBtn.style.display =
     "none";
 
+    /* IMAGE SIZE */
+
     let width = 1024;
     let height = 1024;
-
-    /* IMAGE RATIO */
 
     if(ratioSelect.value === "landscape"){
 
@@ -85,9 +94,11 @@ generateBtn.addEventListener("click", async()=>{
 
     try{
 
+        /* API REQUEST */
+
         const response = await fetch(
 
-        "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0",
+        "https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-dev",
 
         {
 
@@ -100,18 +111,26 @@ generateBtn.addEventListener("click", async()=>{
 
                 "Content-Type":
                 "application/json"
-
             },
 
             body:JSON.stringify({
 
-                inputs: enhancedPrompt
+                inputs: enhancedPrompt,
+
+                parameters:{
+                    width: width,
+                    height: height
+                },
+
+                options:{
+                    wait_for_model:true
+                }
 
             })
 
         });
 
-        /* CHECK ERROR */
+        /* RESPONSE ERROR */
 
         if(!response.ok){
 
@@ -120,8 +139,34 @@ generateBtn.addEventListener("click", async()=>{
 
             console.log(errorText);
 
-            throw new Error("API Failed");
+            throw new Error(
+            "API Failed"
+            );
         }
+
+        /* CHECK JSON ERROR */
+
+        const contentType =
+        response.headers.get(
+        "content-type"
+        );
+
+        if(contentType &&
+        contentType.includes(
+        "application/json")){
+
+            const errorData =
+            await response.json();
+
+            console.log(errorData);
+
+            throw new Error(
+            errorData.error ||
+            "Model Error"
+            );
+        }
+
+        /* GET IMAGE */
 
         const blob =
         await response.blob();
@@ -140,7 +185,7 @@ generateBtn.addEventListener("click", async()=>{
         placeholder.style.display =
         "none";
 
-        /* DOWNLOAD BUTTON */
+        /* DOWNLOAD */
 
         downloadBtn.href =
         imageUrl;
@@ -158,21 +203,31 @@ generateBtn.addEventListener("click", async()=>{
         "flex";
 
         placeholder.innerHTML = `
+
         <h2>Image Generation Failed</h2>
-        <p>Model busy or token issue</p>
+
+        <p>
+        ${error.message}
+        </p>
+
         `;
     }
+
+    /* RESET BUTTON */
 
     generateBtn.innerText =
     "Generate";
 
-    generateBtn.disabled = false;
+    generateBtn.disabled =
+    false;
 
 });
 
-/* ENTER KEY */
+/* ENTER KEY SUPPORT */
 
-userInput.addEventListener("keypress",(e)=>{
+userInput.addEventListener(
+"keypress",
+(e)=>{
 
     if(e.key === "Enter"){
 
