@@ -12,28 +12,31 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-/* FRONTEND */
+/* FRONTEND FILES */
 
-app.use(express.static("./"));
+app.use(express.static(__dirname));
 
 /* HOME PAGE */
 
 app.get("/", (req, res) => {
+
     res.sendFile(__dirname + "/index.html");
 });
 
-/* IMAGE API */
+/* IMAGE GENERATE API */
 
 app.post("/generate-image", async (req, res) => {
 
     try {
 
-        console.log(process.env.HF_TOKEN);
+        console.log("HF TOKEN:", process.env.HF_TOKEN);
 
         const prompt = req.body.prompt;
 
+        console.log("PROMPT:", prompt);
+
         const response = await fetch(
-            "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0",
+            "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2",
             {
                 method: "POST",
 
@@ -48,15 +51,16 @@ app.post("/generate-image", async (req, res) => {
             }
         );
 
+        console.log("HF STATUS:", response.status);
+
         if (!response.ok) {
 
-            const errorText =
-            await response.text();
+            const errorText = await response.text();
 
-            console.log(errorText);
+            console.log("HF ERROR:", errorText);
 
             return res.status(500).json({
-                error: "AI generation failed"
+                error: errorText
             });
         }
 
@@ -77,7 +81,7 @@ app.post("/generate-image", async (req, res) => {
 
     catch (error) {
 
-        console.log(error);
+        console.log("SERVER ERROR:", error);
 
         res.status(500).json({
             error: "Server failed"
