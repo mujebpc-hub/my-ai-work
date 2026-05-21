@@ -1,116 +1,93 @@
 const express = require("express");
-
 const cors = require("cors");
-
+const dotenv = require("dotenv");
 const fetch = require("node-fetch");
 
-require("dotenv").config();
+dotenv.config();
 
 const app = express();
 
-app.use(cors());
+/* MIDDLEWARE */
 
+app.use(cors());
 app.use(express.json());
 
-/* IMAGE GENERATION API */
+/* FRONTEND */
 
-app.post("/generate", async (req, res) => {
+app.use(express.static("./"));
 
-    try{
+/* HOME PAGE */
 
-        const { prompt, width, height } = req.body;
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/index.html");
+});
 
-        const enhancedPrompt = `
-        ${prompt},
-        ultra realistic,
-        cinematic lighting,
-        highly detailed,
-        masterpiece,
-        8k
-        `;
+/* IMAGE API */
+
+app.post("/generate-image", async (req, res) => {
+
+    try {
+
+        console.log(process.env.HF_TOKEN);
+
+        const prompt = req.body.prompt;
 
         const response = await fetch(
+            "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0",
+            {
+                method: "POST",
 
-        "https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-dev",
-
-        {
-
-            method:"POST",
-
-            headers:{
-
-                "Authorization":
-                `Bearer ${process.env.HF_TOKEN}`,
-
-                "Content-Type":
-                "application/json"
-            },
-
-            body:JSON.stringify({
-
-                inputs: enhancedPrompt,
-
-                parameters:{
-                    width,
-                    height
+                headers: {
+                    Authorization: `Bearer ${process.env.HF_TOKEN}`,
+                    "Content-Type": "application/json"
                 },
 
-                options:{
-                    wait_for_model:true
-                }
+                body: JSON.stringify({
+                    inputs: prompt
+                })
+            }
+        );
 
-            })
+        if (!response.ok) {
 
-        });
-
-        if(!response.ok){
-
-            const error =
+            const errorText =
             await response.text();
 
-            console.log(error);
+            console.log(errorText);
 
             return res.status(500).json({
-
-                error:"Image generation failed"
-
+                error: "AI generation failed"
             });
         }
 
         const arrayBuffer =
         await response.arrayBuffer();
 
-        const buffer =
-        Buffer.from(arrayBuffer);
+        const base64 =
+        Buffer.from(arrayBuffer).toString("base64");
 
-        res.set("Content-Type","image/png");
+        const imageUrl =
+        `data:image/png;base64,${base64}`;
 
-        res.send(buffer);
+        res.json({
+            imageUrl
+        });
 
     }
 
-    catch(error){
+    catch (error) {
 
         console.log(error);
 
         res.status(500).json({
-
-            error:"Server Error"
-
+            error: "Server failed"
         });
     }
-
 });
 
-/* SERVER START */
+/* START SERVER */
 
-const PORT =
-process.env.PORT || 3000;
+app.listen(3000, () => {
 
-app.listen(PORT, ()=>{
-
-    console.log(
-    `Server running on port ${PORT}`
-    );
-
+    console.log("Server Running On Port 3000");
 });
